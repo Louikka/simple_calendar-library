@@ -5,55 +5,6 @@
 **/
 
 
-
-function getDateToString(format) { // format: string (D = day, M = month, Y = year)
-//                      (format[, year, month])
-//                                        ^ should be number (0 is January)
-
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jule', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    let d = new Date();
-
-    if (arguments.length >= 3 && typeof +arguments[1] === 'number' && typeof +arguments[2] === 'number') {
-
-        d = new Date(+arguments[1], +arguments[2]);
-
-    };
-
-    const day = d.getDate();
-    const month = months[d.getMonth()];
-    const year = d.getFullYear();
-
-    if (typeof format === 'string') {
-
-        let a = [];
-
-        for (let i = 0; i < format.length; i++) {
-
-            switch(format[i]) {
-
-                case "D" : a.push(day);
-                break;
-
-                case "M" : a.push(month);
-                break;
-
-                case "Y" : a.push(year);
-                break;
-                
-            };
-            
-        };
-
-        return a.join(' ');
-
-    } else {
-
-        return "?";
-
-    };
-
-};
-
 function createCalendar(type, year, month) { // type: string => 'mon' (week begin on monday) || 'sun' (week begin on sunday)
 // returns a string with HTML code
 // for example
@@ -61,6 +12,7 @@ function createCalendar(type, year, month) { // type: string => 'mon' (week begi
 // creates calendar for May month of current year with week starting on sunday
 
     const weekDays = (type === 'mon') ? ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'] : ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jule', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     let d = new Date(year, month);
 
@@ -86,7 +38,7 @@ function createCalendar(type, year, month) { // type: string => 'mon' (week begi
 
     // calendar header
 
-    table += `<caption class="calendar_caption">${getDateToString('MY', year, month)}</caption>`;
+    table += `<caption class="calendar_caption">${months[d.getMonth()]} ${d.getFullYear()}</caption>`;
 
     // table header
 
