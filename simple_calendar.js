@@ -5,16 +5,17 @@
 **/
 
 
-function createCalendar(type, year, month) { // type: string => 'mon' (week begin on monday) || 'sun' (week begin on sunday)
-// returns a string with HTML code
-// for example
-//   --> elem.innerHTML = createCalendar('sun', new Date().getFullYear(), 4);
-// creates calendar for May month of current year with week starting on sunday
+function createCalendar(type, year, month, style) {
+// type: string => 'mon' (week begin on monday) || 'sun' (week begin on sunday)
+// year: number | string
+// month: number | string (must be represented as number from 0 to 11 for Jan to Dec respec.)
+// style: string => 'none' || 'def' (style="table-layout:fixed;text-align:center;")
 
     const weekDays = (type === 'mon') ? ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'] : ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jule', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const tableStyle = (style === 'none') ? '' : ' style="table-layout:fixed;text-align:center;"';
 
-    let d = new Date(year, month);
+    let d = new Date(year || new Date().getFullYear(), month || new Date().getMonth());
 
     function getDay(date) {
 
@@ -34,7 +35,7 @@ function createCalendar(type, year, month) { // type: string => 'mon' (week begi
     };
 
 
-    let table = '<table style="table-layout:fixed;text-align:center;">';
+    let table = `<table${tableStyle}>`;
 
     // calendar header
 
@@ -54,7 +55,7 @@ function createCalendar(type, year, month) { // type: string => 'mon' (week begi
 
     for (let i = 0; i < getDay(d); i++) { table += '<td></td>'; };
 
-    while (d.getMonth() == month) {
+    while (d.getMonth() == (month || new Date().getMonth())) {
 
         table += `<td class="calendar_day${d.getDate()}">${d.getDate()}</td>`;
 
